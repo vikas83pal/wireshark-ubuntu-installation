@@ -1,54 +1,80 @@
-# wireshark-ubuntu-installation
 
-# Add the stable official PPA. To do this, go to terminal by pressing Ctrl+Alt+T and run:
-```
-sudo add-apt-repository ppa:wireshark-dev/stable
+# Wireshark Installation Guide for Ubuntu
 
-```
+## Installation Steps
 
-# Update the repository:
-```
-sudo apt-get update
+### 1. Update and Upgrade the System
+Before installing any software, ensure your system is updated:
 
-```
-
-# Install wireshark 2.0:
-```
-sudo apt-get install wireshark
-
+```bash
+sudo apt update
+sudo apt upgrade -y
 ```
 
+### 2. Install Wireshark
+Run the following command to install Wireshark:
 
-# Run wireshark:
-```
-sudo wireshark
-
+```bash
+sudo apt install wireshark -y
 ```
 
-- If you get an error couldn't run /usr/bin/dumpcap in child process: Permission Denied, go to the terminal again and run:
-```
+### 3. Configure Non-Root Access (Optional)
+During installation, you'll see the prompt:
+
+> **"Should non-superusers be able to capture packets?"**
+
+- Select **Yes** if you want non-root users to capture packets.
+- If you selected **No** or skipped this step, reconfigure it later using:
+
+```bash
 sudo dpkg-reconfigure wireshark-common
-
 ```
 
-- Say YES to the message box. This adds a wireshark group. Then add user to the group by typing
+Then, add your user to the `wireshark` group:
 
+```bash
+sudo usermod -aG wireshark $USER
 ```
-sudo adduser $USER wireshark
 
+To apply group changes, log out and log back in.
+
+### 4. Verify Installation
+Check if Wireshark is successfully installed:
+
+```bash
+wireshark --version
 ```
 
-- Then restart your machine and open Wireshark. It works. Good Luck.
-- Open terminal and type the commands:
+### 5. Run Wireshark
+To launch Wireshark, use either of these methods:
+- From the terminal:
+
+```bash
+wireshark
 ```
-    sudo apt-get install wireshark
-    sudo dpkg-reconfigure wireshark-common
-    sudo adduser $USER wireshark
-    wireshark
+
+- Search for **Wireshark** in the application menu.
+
+### Optional: Installing the Latest Version
+To install the latest version of Wireshark:
+
+1. Add the official Wireshark PPA:
+
+```bash
+sudo add-apt-repository ppa:wireshark-dev/stable
+sudo apt update
 ```
-- If you getting wireshark running error, so close it and then just do the following:
+
+2. Install Wireshark:
+
+```bash
+sudo apt install wireshark -y
 ```
-    Go to usr/share/wireshark
-    Open init.lua with a text editor
-    Change disable_lua = false to disable_lua = true
+
+### 6. Uninstall Wireshark (if needed)
+If you need to remove Wireshark:
+
+```bash
+sudo apt remove wireshark wireshark-common -y
 ```
+
